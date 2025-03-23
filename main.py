@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict, Any
 import logging
@@ -35,7 +35,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8002", "http://127.0.0.1:8002"],
+    allow_origins=["http://localhost:9000", "http://127.0.0.1:9000"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
@@ -81,7 +81,7 @@ async def generate_itinerary(request: ItineraryRequest) -> Dict[str, Any]:
 async def get_events(request: EventRequest) -> Dict[str, Any]:
     """Get event recommendations for a specific location and date."""
     try:
-        logger.info(f"Finding events in {request.location} for {request.date}")
+        logger.info(f"Finding events in {request.location} for {request.event_date}")
         response = await events_agent.process(request.dict())
         if not response.success:
             logger.error(f"Event search failed: {response.error}")
@@ -95,8 +95,10 @@ async def get_events(request: EventRequest) -> Dict[str, Any]:
 async def get_restaurants(request: RestaurantRequest) -> Dict[str, Any]:
     """Get restaurant recommendations for a specific location and date."""
     try:
-        logger.info(f"Finding restaurants in {request.location} for {request.date}")
-        response = await restaurant_agent.process(request.dict())
+        # Convert the request to dict to ensure defaults are applied
+        request_dict = request.dict()
+        logger.info(f"Finding restaurants in {request_dict['location']} for {request_dict['date']}")
+        response = await restaurant_agent.process(request_dict)
         if not response.success:
             logger.error(f"Restaurant search failed: {response.error}")
             raise HTTPException(status_code=400, detail=response.error)
@@ -104,6 +106,24 @@ async def get_restaurants(request: RestaurantRequest) -> Dict[str, Any]:
     except Exception as e:
         logger.error(f"Error finding restaurants: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/debug-itinerary")
+async def debug_itinerary(request: dict = Body(...)) -> Dict[str, Any]:
+    """Debug endpoint to echo back the received request and test parsing."""
+    try:
+        # Try to parse as ItineraryRequest to validate
+        itinerary_request = ItineraryRequest(**request)
+        return {
+            "received": request,
+            "parsed": itinerary_request.dict(),
+            "validation": "success"
+        }
+    except Exception as e:
+        return {
+            "received": request,
+            "error": str(e),
+            "validation": "failed"
+        }
 
 if __name__ == "__main__":
     import uvicorn

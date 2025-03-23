@@ -15,7 +15,7 @@ class Config:
         
         # LangChain and OpenAI configurations
         self.agent_config = {
-            "model": "gpt-4",
+            "model": "gpt-3.5-turbo",
             "temperature": float(os.getenv("TEMPERATURE", "0.7")),
             "max_tokens": int(os.getenv("MAX_TOKENS", "2000")),
             "verbose": self.debug,

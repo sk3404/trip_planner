@@ -16,7 +16,7 @@ class BaseAgent(ABC):
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
-        self.model = config.get("model", "gpt-4")
+        self.model = config.get("model", "gpt-3.5-turbo")
         self.temperature = config.get("temperature", 0.7)
         self.max_tokens = config.get("max_tokens", 2000)
 

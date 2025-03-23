@@ -2,10 +2,8 @@ from typing import Dict, Any, List
 from datetime import datetime
 import json
 from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.chains import LLMChain
+from langchain.prompts import ChatPromptTemplate
 from langchain_community.tools import DuckDuckGoSearchRun
-from langchain.agents import AgentExecutor, create_openai_functions_agent
 from langchain.tools import Tool
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 
@@ -19,7 +17,7 @@ class EventsAgent(BaseAgent):
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.llm = ChatOpenAI(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             temperature=0.7,
             max_tokens=2000
         )
@@ -27,58 +25,51 @@ class EventsAgent(BaseAgent):
         # Initialize web search tool
         self.search = DuckDuckGoSearchRun()
         
-        # Define tools for the agent
-        self.tools = [
-            Tool(
-                name="web_search",
-                func=self.search.run,
-                description="Useful for searching the internet for current events and activities in a specific location and date."
-            )
-        ]
-        
-        # Define the system prompt for event recommendations
-        self.system_prompt = """You are an expert event planner and local guide.
+        # Define the prompt template for event recommendations
+        template = """You are an expert event planner and local guide.
         Your task is to find and recommend the best events and activities based on user preferences.
+
+        Location: {location}
+        Date: {date}
+        Interests: {preferences}
+        Budget: ${budget}
+
         Use the web search tool to find current events and then analyze them based on:
         1. Relevance to user interests
         2. Timing and availability
         3. Price within budget
         4. Location accessibility
         5. Overall value and uniqueness
-        
-        Format your response as a structured JSON with the following schema:
-        {
+
+        Format your response as a JSON object with this EXACT structure:
+        {{
             "events": [
-                {
+                {{
                     "name": "Event name",
                     "description": "Detailed description",
                     "date": "YYYY-MM-DD",
                     "location": "Specific location",
                     "price": price_in_float,
                     "category": "Category (e.g., music, sports, culture)"
-                }
+                }}
             ]
-        }"""
-        
-        # Create the agent with tools
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", self.system_prompt),
-            ("human", "{input}"),
-            MessagesPlaceholder(variable_name="agent_scratchpad")
+        }}
+
+        Important:
+        1. Return ONLY the JSON object, no other text
+        2. Ensure all prices are within the specified budget
+        3. Include 3-5 events that best match the user's interests
+        4. Use specific locations with addresses when possible
+        5. Categories should be one of: music, sports, culture, food, entertainment, or education
+
+        Respond with ONLY the JSON object, no additional text."""
+
+        self.prompt = ChatPromptTemplate.from_messages([
+            ("system", template)
         ])
         
-        self.agent = create_openai_functions_agent(
-            llm=self.llm,
-            tools=self.tools,
-            prompt=prompt
-        )
-        
-        # Create the agent executor
-        self.agent_executor = AgentExecutor(
-            agent=self.agent,
-            tools=self.tools,
-            verbose=True
-        )
+        # Create the chain using the newer pattern
+        self.chain = self.prompt | self.llm
     
     async def process(self, input_data: Dict[str, Any]) -> AgentResponse:
         try:
@@ -92,23 +83,55 @@ class EventsAgent(BaseAgent):
             # Convert input to request model
             request = EventRequest(**input_data)
             
-            # Create the human message with the request
-            human_message = f"""
-            Find the best events and activities in {request.location} on {request.date.strftime('%Y-%m-%d')}.
-            The user's interests are: {', '.join(request.preferences)}
-            Budget: ${request.budget}
+            # Prepare the input for the chain
+            chain_input = {
+                "location": request.location,
+                "date": request.event_date.strftime("%Y-%m-%d"),
+                "preferences": ", ".join(request.preferences),
+                "budget": request.budget
+            }
             
-            Please search for events and provide recommendations in the specified JSON format.
-            """
+            # Generate the events using the chain
+            try:
+                response = await self.chain.ainvoke(chain_input)
+                response_text = response.content.strip()
+            except Exception as e:
+                return AgentResponse(
+                    success=False,
+                    data={},
+                    error=f"Failed to generate events: {str(e)}"
+                )
             
-            # Run the agent
-            result = await self.agent_executor.arun(
-                input=human_message
-            )
+            # Clean the response to ensure it's valid JSON
+            if response_text.startswith("```json"):
+                response_text = response_text[7:]
+            if response_text.endswith("```"):
+                response_text = response_text[:-3]
+            response_text = response_text.strip()
             
             # Parse the response into our schema
             try:
-                events_data = json.loads(result)
+                events_data = json.loads(response_text)
+                
+                # Validate the response structure
+                if "events" not in events_data:
+                    return AgentResponse(
+                        success=False,
+                        data={},
+                        error="Response missing 'events' array"
+                    )
+                
+                # Validate each event has the required fields
+                for event in events_data["events"]:
+                    required_fields = ["name", "description", "date", "location", "price", "category"]
+                    if not all(field in event for field in required_fields):
+                        return AgentResponse(
+                            success=False,
+                            data={},
+                            error="Invalid event structure in response"
+                        )
+                
+                # Convert the response to our schema
                 events_response = EventResponse(**events_data)
                 
                 return AgentResponse(
@@ -120,6 +143,12 @@ class EventsAgent(BaseAgent):
                     success=False,
                     data={},
                     error=f"Failed to parse events response: {str(e)}"
+                )
+            except Exception as e:
+                return AgentResponse(
+                    success=False,
+                    data={},
+                    error=f"Failed to process events: {str(e)}"
                 )
             
         except Exception as e:
