@@ -5,11 +5,38 @@ from pydantic import BaseModel, Field
 
 class ItineraryRequest(BaseModel):
     """Request model for itinerary generation."""
-    destination: str
-    start_date: datetime
-    end_date: datetime
-    preferences: List[str]
-    budget: Optional[float] = None
+    destination: str = Field(
+        description="City or destination name",
+        example="San Francisco"
+    )
+    start_date: datetime = Field(
+        description="Start date and time of the trip",
+        example="2024-04-01T00:00:00"
+    )
+    end_date: datetime = Field(
+        description="End date and time of the trip",
+        example="2024-04-02T23:59:59"
+    )
+    preferences: List[str] = Field(
+        description="List of travel preferences/interests",
+        example=["culture", "food", "nature", "shopping"]
+    )
+    budget: Optional[float] = Field(
+        default=None,
+        description="Optional budget for the trip in USD",
+        example=500.0
+    )
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "destination": "San Francisco",
+                "start_date": "2024-04-01T00:00:00",
+                "end_date": "2024-04-02T23:59:59",
+                "preferences": ["culture", "food", "nature", "shopping"],
+                "budget": 500.0
+            }
+        }
 
 
 class Activity(BaseModel):

@@ -23,32 +23,45 @@ class ItineraryAgent(BaseAgent):
         )
         
         # Define the prompt template for itinerary generation
+        template = """You are an expert travel planner. Create a detailed 2-day itinerary for the following trip:
+
+Destination: {destination}
+Start Date: {start_date}
+Interests: {preferences}
+
+Create a schedule with activities from 9 AM to 9 PM each day. Include meals and travel time between locations.
+Each activity should be 1-3 hours long.
+
+Format your response as a JSON object with this EXACT structure:
+{
+    "days": [
+        {
+            "date": "YYYY-MM-DD",
+            "activities": [
+                {
+                    "name": "Activity Name",
+                    "description": "Detailed description",
+                    "start_time": "YYYY-MM-DDTHH:MM:SS",
+                    "end_time": "YYYY-MM-DDTHH:MM:SS",
+                    "location": "Specific location with address if possible",
+                    "category": "One of: culture, food, nature, shopping, or landmarks"
+                }
+            ]
+        }
+    ]
+}
+
+Important:
+1. Use ISO format for dates (YYYY-MM-DDTHH:MM:SS)
+2. Include EXACTLY 2 days
+3. Each day should have 4-6 activities
+4. Activities should be in chronological order
+5. Return ONLY the JSON object, no other text
+
+Respond with ONLY the JSON object, no additional text."""
+
         self.prompt_template = ChatPromptTemplate.from_messages([
-            ("system", """You are an expert travel planner with deep knowledge of destinations worldwide.
-            Create a detailed 2-day itinerary that maximizes the traveler's experience based on their interests.
-            Consider timing, location proximity, and local customs.
-            Format the response as a structured JSON with the following schema:
-            {
-                "days": [
-                    {
-                        "date": "YYYY-MM-DD",
-                        "activities": [
-                            {
-                                "name": "Activity name",
-                                "description": "Detailed description",
-                                "start_time": "HH:MM",
-                                "end_time": "HH:MM",
-                                "location": "Specific location",
-                                "category": "Category (e.g., culture, food, nature)"
-                            }
-                        ]
-                    }
-                ]
-            }"""),
-            ("human", """Create a 2-day itinerary for {city} starting on {start_date}.
-            The traveler is interested in: {interests}
-            Please ensure activities are well-timed and logically ordered.
-            Include a mix of activities based on the interests provided.""")
+            ("system", template)
         ])
         
         # Create the LangChain chain
@@ -71,15 +84,33 @@ class ItineraryAgent(BaseAgent):
             
             # Generate the itinerary using LangChain
             response = await self.chain.arun(
-                city=request.destination,
+                destination=request.destination,
                 start_date=request.start_date.strftime("%Y-%m-%d"),
-                interests=", ".join(request.preferences)
+                preferences=", ".join(request.preferences)
             )
+            
+            # Clean the response to ensure it's valid JSON
+            response = response.strip()
+            if response.startswith("```json"):
+                response = response[7:]
+            if response.endswith("```"):
+                response = response[:-3]
+            response = response.strip()
             
             # Parse the response into our schema
             try:
                 itinerary_data = json.loads(response)
-                itinerary_response = ItineraryResponse(**itinerary_data)
+                
+                # Validate the response structure
+                if "days" not in itinerary_data:
+                    return AgentResponse(
+                        success=False,
+                        data={},
+                        error="Response missing 'days' array"
+                    )
+                
+                # Convert the response to our schema
+                itinerary_response = ItineraryResponse(days=itinerary_data["days"])
                 
                 return AgentResponse(
                     success=True,
@@ -90,6 +121,12 @@ class ItineraryAgent(BaseAgent):
                     success=False,
                     data={},
                     error=f"Failed to parse itinerary response: {str(e)}"
+                )
+            except Exception as e:
+                return AgentResponse(
+                    success=False,
+                    data={},
+                    error=f"Failed to process itinerary: {str(e)}"
                 )
             
         except Exception as e:
