@@ -96,7 +96,7 @@ class RestaurantAgent(BaseAgent):
             # Prepare the input for the chain
             chain_input = {
                 "location": request.location,
-                "date": request.date.strftime("%Y-%m-%d"),
+                "date": request.restaurant_date.strftime("%Y-%m-%d"),
                 "cuisine_preferences": ", ".join(request.cuisine_preferences),
                 "price_range": request.price_range,
                 "party_size": request.party_size
@@ -167,5 +167,5 @@ class RestaurantAgent(BaseAgent):
     
     def validate_input(self, input_data: Dict[str, Any]) -> bool:
         """Validate the input data for restaurant recommendations."""
-        # Only date is required, other fields have defaults
-        return "date" in input_data 
+        # Only restaurant_date is required, other fields have defaults
+        return "restaurant_date" in input_data 

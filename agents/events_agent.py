@@ -156,5 +156,5 @@ class EventsAgent(BaseAgent):
     
     def validate_input(self, input_data: Dict[str, Any]) -> bool:
         """Validate the input data for event recommendations."""
-        required_fields = ["location", "date", "preferences", "budget"]
-        return all(field in input_data for field in required_fields) 
+        # Only event_date is required, other fields have defaults
+        return "event_date" in input_data 

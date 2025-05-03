@@ -97,7 +97,7 @@ async def get_restaurants(request: RestaurantRequest) -> Dict[str, Any]:
     try:
         # Convert the request to dict to ensure defaults are applied
         request_dict = request.dict()
-        logger.info(f"Finding restaurants in {request_dict['location']} for {request_dict['date']}")
+        logger.info(f"Finding restaurants in {request_dict['location']} for {request_dict['restaurant_date']}")
         response = await restaurant_agent.process(request_dict)
         if not response.success:
             logger.error(f"Restaurant search failed: {response.error}")

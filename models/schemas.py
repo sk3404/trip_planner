@@ -116,7 +116,7 @@ class RestaurantRequest(BaseModel):
         description="City or location name",
         example="Seattle"
     )
-    date: date = Field(
+    restaurant_date: date = Field(
         description="Date for restaurant recommendations",
         example="2024-04-01"
     )
@@ -140,7 +140,7 @@ class RestaurantRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "location": "Seattle",
-                "date": "2024-04-01",
+                "restaurant_date": "2024-04-01",
                 "cuisine_preferences": ["italian", "japanese", "american"],
                 "price_range": "$$",
                 "party_size": 2
