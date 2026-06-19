@@ -7,3 +7,7 @@ dist/
 .pytest_cache/
 .venv/
 venv/
+
+# Tier-2 operational data and secrets — never commit (CLAUDE.md §15)
+data/
+.env

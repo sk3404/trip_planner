@@ -5,11 +5,18 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "marginal-tigers"
 version = "0.1.0"
-description = "marginal_tigers package with the marginal CLI"
+description = "marginal_tigers content pipeline with the marginal CLI"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 license = { text = "MIT" }
-dependencies = []
+dependencies = [
+    "anthropic",
+    "pydantic>=2",
+    "pydantic-settings",
+    "jinja2",
+    "sqlite-utils",
+    "typer",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
@@ -18,4 +25,5 @@ dev = ["pytest>=7.0"]
 marginal = "marginal_tigers.cli:main"
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["marginal_tigers*"]

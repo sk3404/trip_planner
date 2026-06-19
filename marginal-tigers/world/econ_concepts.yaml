@@ -1,0 +1,148 @@
+# ============================================================================
+# ECON CONCEPT LIBRARY
+# ----------------------------------------------------------------------------
+# Tier-1, hand-edited. The planner assigns `target_concept` (by id) to
+# concept_led slots; the generator may cover an under-covered one on a swap.
+# This list is FINITE on purpose — there are only ~15-20 concepts that map
+# cleanly to a visual gag. Coverage is tracked over these ids. Add/retire freely.
+#
+# Each `visual_hook` must satisfy the golden rule: the concept is SHOWN (Jan or
+# the scene BECOMES it), and the caption only names what's already on screen.
+# `register: dark` concepts belong to Big Louis's world (the city pole).
+# ============================================================================
+
+concepts:
+
+  - id: opportunity_cost
+    name: Opportunity cost
+    definition: the value of the next-best alternative given up by a choice.
+    visual_hook: Jan naps through the sunrise hike; the frame holds the empty trail and the view he traded it for.
+    example_caption: "The cost of the nap was the view. Jan considered this a fair price."
+    register: standard
+
+  - id: revealed_preference
+    name: Revealed preference
+    definition: true preferences are shown by choices, not by what one says.
+    visual_hook: Stefan lists the day's enriching options on a chalkboard; Jan is already face-down in the snack bag.
+    example_caption: "Revealed preference."
+    register: standard
+
+  - id: sunk_cost
+    name: Sunk cost
+    definition: costs already incurred and unrecoverable should not drive future decisions.
+    visual_hook: Jan refuses to turn back on a miserable trail because of the miles already walked; Stefan points calmly at the map.
+    example_caption: "The miles are gone, Jan. They are not an asset."
+    register: standard
+
+  - id: deadweight_loss
+    name: Deadweight loss
+    definition: value destroyed that accrues to no one; a loss with no offsetting gain.
+    visual_hook: Jan's ice cream melts down the cone, uneaten, into the dirt — the melted puddle IS the loss.
+    example_caption: "Deadweight loss."
+    register: standard
+
+  - id: free_rider
+    name: Free-rider problem
+    definition: benefiting from a shared effort without contributing to it.
+    visual_hook: squirrels strain to haul the canoe; Jan reclines IN the canoe, contributing nothing, enjoying the ride.
+    example_caption: "Jan is providing morale."
+    register: standard
+
+  - id: tragedy_of_the_commons
+    name: Tragedy of the commons
+    definition: a shared resource gets over-consumed because individual incentives ignore the collective cost.
+    visual_hook: the office-hours candy bowl, emptied to a single sad wrapper, Jan nearby with bulging cheeks.
+    example_caption: "The commons did not survive office hours."
+    register: standard
+
+  - id: comparative_advantage
+    name: Comparative advantage
+    definition: gains from each party specializing in what they give up least to do.
+    visual_hook: Stefan does all the planning/labor; Jan specializes entirely in resting — and a tiny chalkboard shows it's somehow efficient.
+    example_caption: "Each tiger does what he is least bad at."
+    register: standard
+
+  - id: diminishing_marginal_utility
+    name: Diminishing marginal utility
+    definition: each additional unit yields less added satisfaction than the last.
+    visual_hook: Jan beams at the first bowl of noodles, contented at the second, glazed and defeated behind the third.
+    example_caption: "The third bowl brought him no joy. He ordered a fourth."
+    register: standard
+
+  - id: pareto_efficiency
+    name: Pareto efficiency
+    definition: an allocation where no one can be made better off without making someone worse off.
+    visual_hook: Stefan working, Jan sleeping — both visibly content; a sign notes neither could be improved without ruining the other.
+    example_caption: "Pareto efficient. Do not touch."
+    register: standard
+
+  - id: moral_hazard
+    name: Moral hazard
+    definition: taking more risk because someone else bears the cost.
+    visual_hook: Jan attempts a reckless cannonball precisely because the squirrel lifeguard team is on duty below.
+    example_caption: "Insured against consequences, Jan jumped."
+    register: standard
+
+  - id: principal_agent
+    name: Principal–agent problem
+    definition: an agent acts in their own interest rather than the principal's.
+    visual_hook: Stefan (principal) sends Jan (agent) to fetch supplies; Jan returns with only snacks for himself.
+    example_caption: "Incentives were not aligned."
+    register: standard
+
+  - id: adverse_selection
+    name: Adverse selection
+    definition: hidden information skews who takes a deal, degrading the pool.
+    visual_hook: a "free buffet" sign; only Jan and three identically food-motivated critters have shown up.
+    example_caption: "The all-you-can-eat attracted exactly the wrong clientele."
+    register: standard
+
+  - id: hyperbolic_discounting
+    name: Time inconsistency (hyperbolic discounting)
+    definition: over-weighting immediate rewards over larger later ones.
+    visual_hook: Stefan's neat plan for the day pinned to the wall; Jan already asleep at 9am, plan untouched.
+    example_caption: "The future Jan would handle it. The present Jan napped."
+    register: standard
+
+  - id: signaling
+    name: Signaling
+    definition: costly actions taken to credibly convey unobservable quality.
+    visual_hook: Stefan in full expensive alpine kit at the trailhead; Jan in the same gear, asleep, having signaled nothing but bought the jacket.
+    example_caption: "The gear was the signal. Jan sent it from the parking lot."
+    register: standard
+
+  - id: externality
+    name: Externality
+    definition: a cost or benefit imposed on a third party not reflected in the transaction.
+    visual_hook: Jan's snoring visibly rattles a whole row of trying-to-meditate critters at the spa.
+    example_caption: "Jan's rest imposed costs on everyone downwind of the snore."
+    register: standard
+
+  - id: bsts_giffen   # kept rare; advanced/charming
+    name: Giffen good
+    definition: a rare good consumed MORE as its price rises (no good substitute, dominates the budget).
+    visual_hook: the price tag on Jan's beloved cheap noodles ticks up; Jan, alarmed, buys even more of them.
+    example_caption: "Price rose. Jan bought more. Economists wept."
+    register: standard
+
+  # ---- DARK ECON (Big Louis / city pole; PG-absurd) ----
+  - id: regulatory_arbitrage
+    name: Regulatory arbitrage
+    definition: exploiting gaps between jurisdictions' rules for advantage.
+    visual_hook: Big Louis moving a gold bar between a "Zurich" box and a "Seattle" box, deadpan, as if filing.
+    example_caption: "Big Louis simply relocated the asset to a friendlier paragraph."
+    register: dark
+
+  - id: rent_seeking
+    name: Rent-seeking
+    definition: gaining wealth by capturing value rather than creating it.
+    visual_hook: Big Louis collecting a toll at a tiny booth he installed on a path he did not build.
+    example_caption: "Big Louis created nothing and charged for it. This is his core competency."
+    register: dark
+
+  - id: money_laundering
+    name: Money laundering (rendered as tedium)
+    definition: disguising illicit funds as legitimate income.
+    visual_hook: associates running cash through an absurdly mundane front — a tiny plush laundromat, literally washing bills on a line.
+    example_caption: "The money came out clean. Also slightly damp."
+    register: dark

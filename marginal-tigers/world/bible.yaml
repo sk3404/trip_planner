@@ -1,0 +1,244 @@
+# ============================================================================
+# STEFAN & JAN — WORLD BIBLE
+# ----------------------------------------------------------------------------
+# Tier-1 source of truth (git, hand-edited). The daily generator reads this on
+# every run. Character `appearance` blocks are deliberately structured because
+# they double as ground truth for the future character-consistency verifier
+# (detect the right tiger, confirm the right tag/eyes/markings).
+#
+# Editing this file changes all FUTURE generated episodes; it does not require
+# regenerating the year plan (that is a separate, structural artifact).
+# ============================================================================
+
+account:
+  premise: >
+    Two plush tiger toys living an aspirational second life of travel and
+    economics, after quitting their old jobs at a money-laundering firm.
+    Stefan is competent; Jan is a disaster; an economics punchline usually
+    seals it. Played completely straight, documentary-style.
+  voice: deadpan nature-documentary narrator (primary) over Stefan's in-world chalkboards (secondary)
+  posting_cadence_default: 7 episodes/week  # tune in planner config, not here
+
+# ----------------------------------------------------------------------------
+# THE COMEDIC ENGINE  (read this before writing anything)
+# ----------------------------------------------------------------------------
+comedic_engine:
+  core: Stefan optimizes / Jan defects or fails — never maliciously — and an econ concept names the failure.
+  econ_ratio:
+    principle: 80% tigers, 20% econ. Econ is the seasoning, not the meal.
+    rule_per_episode: AT MOST one econ concept; often zero. Best beats are pure character comedy.
+    rule_across_account: >-
+      Roughly 1 in 3 posts is concept_led (a concept IS the episode);
+      about 2 in 3 are character_led (econ flavor or absent).
+    placement: when present, the concept lands ONCE, as the button/caption at the end.
+  golden_rule: >-
+    SHOWN, NOT STATED. Jan must become the concept in-frame (melting ice cream IS
+    the deadweight loss); the caption only names what we already see. A caption
+    explaining a concept the image does not demonstrate is the number-one failure
+    mode — cut it.
+  test: >-
+    Does the econ make the joke funnier, or am I bolting it on? If bolted on,
+    drop the concept and let the tigers carry it.
+
+# ----------------------------------------------------------------------------
+# PROTAGONISTS
+# ----------------------------------------------------------------------------
+characters:
+
+  stefan:
+    role: Tenured economics professor. The competent one. The straight man.
+    appearance:                      # CONSISTENCY-VERIFIER GROUND TRUTH
+      build: classic, sleeker, well-defined tiger
+      fur_color: brighter, more vivid orange
+      markings: distinct dark/black tiger stripes, well-defined
+      ears: dark/black ear tips with grey inner ear
+      eyes: bright blue
+      muzzle: white muzzle and chest
+      identifier: "the more 'classic tiger' of the two — sharper markings, vivid orange"
+    wardrobe_props: [campus quarter-zip & cap (cardinal red), enamel mug, hydration vest, smartwatch, reading glasses, climbing harness, a small chalkboard he carries like a phone]
+    personality: methodical, prepared, calm, earnest, professorial; never flustered, never quite smug; genuinely loves explaining economics, patient even to an audience of no one.
+    behavioral_signatures:
+      - folds clothes into cubes; runs the numbers; drives at ten-and-two
+      - lectures to woodland critters or to nobody
+      - does 100% of any shared labor without complaint
+    origin: Berlin Zoo. Left the firm (see antagonists.firm) simply because he was tired of living under corporate stress. Now teaches honest economics.
+    flaw: "cheats a little — can't fully switch off. Sometimes delivers a lecture while multitasking or mid-hike. The old workaholism leaks through."
+
+  jan:                               # pronounced "Yahn" (Slavic/German register)
+    role: The lazy foil. The disaster. Accidentally embodies whatever Stefan is explaining.
+    appearance:                      # CONSISTENCY-VERIFIER GROUND TRUTH
+      build: softer, rounder, fluffier
+      fur_color: paler, less saturated orange
+      markings: subtler, less-defined than Stefan's
+      ears: black ear tips
+      eyes: blue
+      face: cream / white face, fluffier fur texture
+      identifier_primary: "round beige 'National Zoo — Washington D.C.' tag on his chest — his single most identifiable feature; should appear in nearly every shot"
+    wardrobe_props: [the National Zoo tag (always), hoarded souvenirs, a recurring STOLEN hotel-lobby potted plant]
+    personality: chronically lazy, nap-prone, food-motivated, serenely oblivious. Not malicious, not dumb — just committed to minimum effort with the dedication others reserve for work.
+    behavioral_signatures:
+      - falls asleep instantly and anywhere (mid-pose, on counters, in floats)
+      - eats constantly; free-rides; photobombs; gets physically stuck in things
+      - panics briefly, then gives up
+    origin: Born in the USA (Washington D.C. Zoo) but of German ancestry — hence the name and the faint old-world streak under the American laziness.
+
+  relationship:
+    dynamic: affectionate. Stefan never gives up on Jan; Jan never resents Stefan. The friction is gentle and permanent.
+    no_growth: static-premise sitcom logic. Neither character learns or changes. Episodes are order-free (except inside arcs).
+
+# ----------------------------------------------------------------------------
+# ANTAGONISTS  (the "city pole" — surfaces occasionally, never the baseline)
+# ----------------------------------------------------------------------------
+antagonists:
+
+  firm:
+    name: "Big Louis & Associates"
+    business: white-collar crime — money laundering, shell companies, gold vaults, secret accounts.
+    tone_rule: PG-ABSURD, NEVER REAL. Crime is treated as mundane corporate tedium (laundering as spreadsheet drudgery, vaults as filing). More fun than real crime. No menace with teeth, ever.
+    geography: based in Seattle; travels to Hawaii and Japan (to meet local counterparts), and to Russia and Zurich (gold vaults, secret bank accounts).
+    role_in_world: embodiment of "dark econ" (laundering, regulatory arbitrage, rent-seeking) — the mirror of the virtuous concepts Stefan teaches.
+
+  big_louis:
+    role: the boss. Smart, rich, evil (PG-absurd evil). Wants revenge on the two who left.
+    appearance:                      # CONSISTENCY-VERIFIER GROUND TRUTH (from reference photos)
+      build: noticeably the LARGEST tiger — bigger than all associates
+      fur: shaggy, scruffy, almost mane-like around the head
+      ears: large, grey-lined
+      eyes: large blue, under a heavy/pronounced brow (reads as menacing-but-deadpan)
+      identifier: "the big shaggy-maned one with the heavy brow; towers over the cubs"
+    register: deadpan Bond-villain played straight — never cartoonish, never winking.
+
+  associates:                        # they MISS Jan & Stefan — torn between loyalty to Louis and friendship
+    identifier_convention: "each carries their origin-zoo / airline tag, exactly as Jan carries his D.C. tag — the tag is the canonical per-character identifier for both comedy and the consistency verifier."
+    members:
+      - name: Louis
+        from: St. Louis Zoo
+        tag: Saint Louis Zoo round tag
+        appearance_note: golden-toned face, blue eyes
+      - name: Charlie
+        from: Bronx Zoo, New York City
+        tag: Bronx Zoo — New York City round tag
+        appearance_note: darker fur, more spotted / leopard-like markings (most distinct of the cubs)
+      - name: Diego
+        from: San Diego Zoo
+        distinguishing_mark: "San-Diego / surfer register (a signature prop, e.g. shades)"  # invent-and-lock for consistency
+      - name: Shilin
+        from: Taiwan; OWNS AN AIRLINE (Tiger Air register)
+        distinguishing_mark: "airline captain's cap — his signature prop"
+      - name: "Park Lee"
+        from: Korea
+        distinguishing_mark: "a signature Korean detail (lock on first appearance)"
+    note: keep their personalities light for now; flesh out per-associate when a Big Louis arc actually needs them.
+
+# ----------------------------------------------------------------------------
+# THE WORLD  (internal logic — what makes the deadpan feel real)
+# ----------------------------------------------------------------------------
+world:
+  setting: looks exactly like ours (real Yosemite, real hotels, real highways, real granite) but populated and run by plush animals plus a few "real" wild creatures who have not signed on to the bit.
+  poles:
+    old_life: the CITY — hard, illegal, stressful corporate work (Seattle, Big Louis). What they fled.
+    new_life: NATURE / FREEDOM — travel, teaching, napping, joy, and an abundance of time. Where they live now.
+    use: the duality is a story engine; most content lives at the nature pole, the city pole intrudes occasionally.
+  physics:                           # consistent rules to lock in
+    - Stefan is always competent; Jan always defects or fails — never maliciously.
+    - Jan accidentally embodies the concept Stefan is explaining (strongest gag structure).
+    - The economics actually works. Markets clear; the hawk delivers because supply met demand. Jan's failures are *economic* failures (free-riding, sunk cost), not mere clumsiness.
+    - EFFORT is the scarce resource. The binding constraint of this economy is Jan's willingness to do anything (near-zero output). The whole world bends around it.
+    - The deadpan is total. No character ever acknowledges the absurdity. Two plush tigers checking out of a hotel are treated with the gravity of a wildebeest migration.
+    - Institutions exist and are tiny: a "Jan Rescue Fund," swim clinics with "Lecture 1," office hours with a candy bowl. Full civilizational apparatus at plush scale with hand-lettered signage.
+    - Text is a feature of the environment, not an overlay — chalkboards, whiteboards, wooden signs, sticky notes, placards are physical objects the characters placed.
+
+# ----------------------------------------------------------------------------
+# SUPPORTING CAST  (kept nameless for now; expandable later)
+# ----------------------------------------------------------------------------
+supporting_cast:
+  plush_class:                       # soft, sentient, economically active — participants in the bit
+    campus_bears: "collegiate, hoodie-wearing, hiking-prone — Stefan's social/professional circle; backbone of group scenes. (Cardinal-red campus coded; see university.)"
+    squirrels: "the working class — belay, fetch, staff bake sales, get yanked airborne when Jan outweighs them. Earnest, overwhelmed, comic through sheer numbers."
+    owls: "the intelligentsia / bureaucracy — clipboards, blueprints, committees, silent judgment. Middle-management with feathers."
+    marmots: "the foremen / officials — direct traffic, hold liability waivers, run scorecard panels. The logistics guy."
+    service_critters: "bear concierge, squirrel in a drive-thru paper hat, spa attendants — a full plush service economy."
+  real_class:                        # rendered realistically, NOT plush — reality that refuses to participate
+    deer: "the locals. Utterly unimpressed, never in a hurry, absolute right-of-way. The one force Stefan's economics cannot move. Gentlest recurring antagonist."
+    others: "turtles, ducks, trout, the occasional hawk. Indifferent or mildly hostile. The HAWK that airlifts Jan = 'outsourced logistics' / real-world delivery intruding on the plush economy."
+  class_rule: plush = participant in the bit; real animal = reality declining to play along. This distinction must never break.
+
+# ----------------------------------------------------------------------------
+# VISUAL STYLE
+# ----------------------------------------------------------------------------
+style:
+  signature: photorealistic plush-toy diorama. Plush characters are UNMISTAKABLY toys; environments are REAL (the granite is granite, the syrup is syrup, the deer is alarmingly real). This contrast is the visual signature and must never break.
+  settings_register: aspirational-cozy (luxury lodge, alpine lakes, the campus) and well-shot travel.
+  tone: deadpan. The funnier the chaos, the flatter the delivery. Dry nature-documentary register.
+  caption:
+    rule: the econ/joke caption is a PHYSICAL in-world object, never a floating overlay.
+    surfaces: [Stefan's small chalkboard, a freestanding chalkboard or whiteboard, a hand-lettered wooden sign or trail placard, a hotel-style framed card, a yellow sticky note, occasionally a maroon lower-third bar in nature-doc style]
+    formats:
+      - "Concept-naming, shown-not-stated: 'The melted scoop IS the deadweight loss, Jan.'"
+      - "Stefan-vs-Jan contrast: 'PACKING: constrained optimization (Stefan) vs. hoarding (Jan).'"
+      - "Deadpan verdict one-liner: 'Expected value of jumping: still negative (Jan).'"
+      - "Dry institutional label: 'THE PULLEY COMMITTEE'; 'Prof. Stefan Research Group — Field Ops.'"
+      - "Mock-signage: 'CHECKOUT — Incidentals: see Jan.'; 'Opportunity Cost of Getting Up: infinity.'"
+      - "Rare meme-aware-but-straight beat: a tiny 'This is fine.' speech bubble from Jan mid-disaster."
+    voice: terse, dry, lowercase-friendly; never explains the joke; addresses Jan directly ('..., Jan.') as a recurring tic.
+    texture: real economics can sit in the background (a Mankiw 'Principles of Microeconomics'; a Lagrangian on a clipboard) — the world takes econ seriously even when the caption is a one-liner.
+
+# ----------------------------------------------------------------------------
+# THE UNIVERSITY  (legal-sensitive — see note)
+# ----------------------------------------------------------------------------
+university:
+  name: "Sequoia University"   # fictional; an elite SF-peninsula school. Stefan teaches econ here.
+  intent: Look like Stanford, stay legal — evoke the Stanford LOOK without infringing on it.
+  visual_coding:
+    color: deep cardinal / maroon red (primary) with cream and sandstone
+    architecture: Mission/Romanesque sandstone arcades, red-tile roofs, arched colonnades, a tall campanile-style bell tower, palm-lined walkways, golden-hour California light
+    gear: cardinal-red hoodies and quarter-zips, caps, enamel mugs, duffel bags, water bottles — all branded 'Sequoia'
+  legal_guardrails:
+    - "Put the fictional NAME on all gear and signage ('Sequoia', never 'Stanford')."
+    - "Do NOT reproduce Stanford's wordmark or its specific tree logo; use a DISTINCT emblem (e.g. a stylized sequoia in a cardinal shield) that differs clearly in form."
+    - "Color and architectural vibe are generally fine to evoke; the NAME and LOGO are what create infringement risk."
+    - "For merch, ads, or sponsorship, get real counsel — the parody cushion thins once money is involved. Not legal advice."
+  note: "Stefan teaches here even while travelling — the running tension of the new life. Existing renders use real 'Stanford' gear; migrate new ones to 'Sequoia'."
+
+# ----------------------------------------------------------------------------
+# LOCATIONS  (home base + travel; tag new ones by season/type as added)
+# ----------------------------------------------------------------------------
+locations:
+  home_base: "Yosemite is a recurring base they return to between trips — but only SOME days of the year, not the default setting; most of the year is elsewhere."
+  weighting: "Spread widely across locations. Yosemite at most ~1 in 8-10 episodes; favour travel (domestic, international, big swings) and the campus. The existing library is Yosemite-heavy — new content should diversify."
+  campus: Sequoia University (recurring; the teaching pole)
+  city_pole: Seattle (the old life / Big Louis); Zurich & Russia (vaults); Hawaii & Japan (counterparts)
+  domestic_travel: [Zion, Las Vegas, Alaska, Hawaii, Portland, Los Angeles, "Highway 101 road trip"]
+  international_travel: ["any country in the world", Japan, Taiwan, Korea]
+  big_swings: [a space trip, a submarine voyage, "Around the World in 80 Days (someday)"]
+  seasonal_notes:
+    winter: [skiing, Tahoe, Alaska]
+    summer: [alpine lakes, lap-swim vs flamingo-float, road trips]
+
+# ----------------------------------------------------------------------------
+# RUNNING GAGS  (canon; reuse, vary, don't overuse)
+# ----------------------------------------------------------------------------
+running_gags:
+  - Jan's stolen hotel-lobby potted plant (travels with them)
+  - Stefan carries a chalkboard the way others carry a phone
+  - the "Jan Rescue Fund" fundraising table / thermometer
+  - office-hours candy bowl as a tragedy of the commons
+  - Jan asleep in impossible places (floats, counters, mid-pose)
+  - Jan free-riding while squirrels do the labor
+  - the deer with absolute, immovable right-of-way
+  - Stefan sneaking a lecture in while hiking / multitasking (his "cheat")
+  - Stefan delivering a live online lecture from a trail or summit; critter students chat 'Best lecture all semester, Professor!'
+  - "the hawk/eagle airlifting a harnessed Jan as 'outsourced logistics' (Jan, deadpan: 'This is fine.')"
+  - micro-bureaucracy over-engineering a simple Jan rescue — a 'Committee' of owls with blueprints and a marmot with signal flags
+
+# ----------------------------------------------------------------------------
+# HARD RULES  (gates and critics should treat violations as blocking on tone)
+# ----------------------------------------------------------------------------
+hard_rules:
+  - Jan's National Zoo D.C. tag appears in nearly every shot.
+  - Stefan is the competent one; Jan fails but is never malicious or stupid.
+  - Crime (Big Louis) is PG-absurd, never realistically dark.
+  - The deadpan never breaks; nothing winks at the camera.
+  - Plush-vs-real class distinction never breaks (tigers plush, deer real).
+  - Econ is SHOWN, not stated; at most one concept per episode, often none.
+  - The relationship is affectionate; humor is never mean-spirited.
