@@ -1,0 +1,99 @@
+# ============================================================================
+# YEAR PLAN  (a PRIOR, not a contract)
+# ----------------------------------------------------------------------------
+# Tier-1, generated-then-hand-edited. The travel-steering lever: change a slot's
+# location/theme to send the tigers somewhere; insert an arc to run a trip or a
+# Big Louis storyline. Regeneration is explicit + diffable; targeted regen of a
+# slice preserves hand edits.
+#
+# This is a SHORT seed slice (~10 weeks from late June 2026) to prove the
+# mechanism — not a full 52. mode tags drive the 80/20 ratio:
+#   character_led (~2/3): pure comedy, target_concept usually null
+#   concept_led   (~1/3): a concept IS the episode ("Stefan Explains...")
+# Slots with an arc_id belong to an arc block (below) and inherit its setting.
+# ============================================================================
+
+year: 2026
+
+arcs:
+  - id: japan_2026
+    title: "Japan (counterparts & shrines)"
+    theme: city travel; Jan eats his way across Tokyo; a brush with Shilin's airline world
+    location: Japan (Tokyo)
+    start_slot: "2026-W28"
+    length_slots: 2
+    continuity_notes: "They fly out end of W27. Jan acquires souvenirs (and possibly a new stolen plant). Light, non-threatening contact with the associates' Asian counterparts — nostalgia, not danger."
+    concept_sequence: [diminishing_marginal_utility]   # the noodle-bowls beat; rest of arc is character-led
+
+  - id: big_louis_seattle_2026
+    title: "Big Louis comes calling"
+    theme: the city pole intrudes — associates track them down; Big Louis wants revenge (PG-absurd); the associates secretly just miss them
+    location: Seattle (and a brief incursion into Yosemite)
+    start_slot: "2026-W32"
+    length_slots: 2
+    continuity_notes: "The ONE big antagonist beat of this slice. Stays affectionate underneath: Louis & Charlie are torn. Resolve gently — no real menace. End back at the nature pole."
+    concept_sequence: [rent_seeking]   # one dark-econ beat (the toll booth); the reunion is character-led
+
+slots:
+
+  - slot_id: "2026-W26"
+    theme: "settling in at the home base; Jan immediately horizontal"
+    mode: character_led
+    location: Yosemite
+    season: summer
+
+  - slot_id: "2026-W27"
+    theme: "semester starts at Sequoia; Stefan over-prepares, Jan audits the candy bowl"
+    mode: concept_led
+    target_concept: signaling
+    location: Sequoia University
+    calendar_anchor: "semester start"
+
+  - slot_id: "2026-W28"
+    theme: "arrive in Tokyo in the rain; the associates' world is near"
+    mode: character_led
+    location: Japan (Tokyo)
+    arc_id: japan_2026
+
+  - slot_id: "2026-W29"
+    theme: "Jan vs. the noodle shops; one concept lands over bowl number three"
+    mode: concept_led
+    target_concept: diminishing_marginal_utility
+    location: Japan (Tokyo)
+    arc_id: japan_2026
+
+  - slot_id: "2026-W30"
+    theme: "Highway 101 road trip home; deer roadblock; Jan demands snacks"
+    mode: character_led
+    location: "Highway 101"
+    season: summer
+
+  - slot_id: "2026-W31"
+    theme: "'Stefan Explains...' — the melting-ice-cream lesson, on a Portland food crawl"
+    mode: concept_led
+    target_concept: deadweight_loss
+    location: Portland
+
+  - slot_id: "2026-W32"
+    theme: "associates appear in Seattle; Big Louis sets up a toll booth"
+    mode: concept_led
+    target_concept: rent_seeking
+    location: Seattle
+    arc_id: big_louis_seattle_2026
+
+  - slot_id: "2026-W33"
+    theme: "the gentle showdown; the associates secretly just miss them; everyone goes home"
+    mode: character_led
+    location: Seattle
+    arc_id: big_louis_seattle_2026
+
+  - slot_id: "2026-W34"
+    theme: "a Lake Tahoe stop to recover; lap-swim vs flamingo float"
+    mode: character_led
+    location: Lake Tahoe
+    season: summer
+
+  - slot_id: "2026-W35"
+    theme: "a Las Vegas detour; Jan at the buffet, Stefan quietly appalled"
+    mode: character_led
+    location: Las Vegas
